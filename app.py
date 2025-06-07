@@ -37,14 +37,14 @@ def fetch_news(topic, region="UK"):
 
 # --- 3. GPT Vibe Analysis ---
 def generate_vibe_summary(articles, topic):
-    openai.api_key = "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"
+    client = openai.OpenAI(api_key="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")
 
     content = "\n\n".join([f"{a['title']} - {a['description']}" for a in articles if a['description']])
 
     prompt = f"""
     You're a media analyst for a PR agency.
     Given recent articles about "{topic}", summarise the following:
-    
+
     - Overall sentiment (positive, neutral, negative)
     - Media tone (supportive, critical, divided)
     - Key commentators or outlets
@@ -57,7 +57,7 @@ def generate_vibe_summary(articles, topic):
     """
 
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
@@ -78,3 +78,4 @@ if submit and topic:
             st.markdown(summary)
         else:
             st.warning("No relevant articles found for this topic.")
+
