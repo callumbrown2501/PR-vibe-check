@@ -57,7 +57,7 @@ def generate_vibe_summary(articles, topic):
     """
 
     try:
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
