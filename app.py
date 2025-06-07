@@ -37,7 +37,7 @@ def fetch_news(topic, region="UK"):
 
 # --- 3. GPT Vibe Analysis ---
 def generate_vibe_summary(articles, topic):
-    client = openai.OpenAI(api_key="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")
+    openai.api_key = "sk-fieOblFi1abuO81Gc1NX2yRK3jg0RkJ7OXxzlcuP2biC2HwM0inC1xqrswAysrme086_xcwEuQT3BlbkFJAltLPMuYYPlYqxTz0dLP5O8bIEqn1yLxmuUGdaP46g6_b5zZT0IJAt-q1BRY5m7sUMx6k-UrgA"
 
     content = "\n\n".join([f"{a['title']} - {a['description']}" for a in articles if a['description']])
 
@@ -57,7 +57,7 @@ def generate_vibe_summary(articles, topic):
     """
 
     try:
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[{"role": "user", "content": prompt}],
             temperature=0.7
@@ -78,4 +78,3 @@ if submit and topic:
             st.markdown(summary)
         else:
             st.warning("No relevant articles found for this topic.")
-
